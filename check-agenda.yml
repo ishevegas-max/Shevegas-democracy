@@ -1,0 +1,118 @@
+name: Check for New Council Agendas
+
+on:
+
+# Run every 6 hours
+
+schedule:
+- cron: ‘0 */6 * * *’  # Every 6 hours at :00
+
+# Allow manual trigger
+
+workflow_dispatch:
+
+jobs:
+check-agendas:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout repository
+    uses: actions/checkout@v4
+  
+  - name: Set up Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: '3.11'
+  
+  - name: Install dependencies
+    run: |
+      python -m pip install --upgrade pip
+      pip install requests beautifulsoup4 lxml
+  
+  - name: Run agenda scraper
+    id: scraper
+    run: |
+      cd automation
+      python scraper.py
+    continue-on-error: true
+  
+  - name: Check if new agenda found
+    id: check
+    run: |
+      if [ -f automation/agenda_data.json ]; then
+        echo "found=true" >> $GITHUB_OUTPUT
+        echo "New agenda detected!"
+      else
+        echo "found=false" >> $GITHUB_OUTPUT
+        echo "No new agenda"
+      fi
+  
+  - name: Generate ballot
+    if: steps.check.outputs.found == 'true'
+    run: |
+      cd automation
+      python ballot-generator.py
+  
+  - name: Send email notification
+    if: steps.check.outputs.found == 'true'
+    uses: dawidd6/action-send-mail@v3
+    with:
+      server_address: smtp.gmail.com
+      server_port: 465
+      username: ${{ secrets.EMAIL_USERNAME }}
+      password: ${{ secrets.EMAIL_PASSWORD }}
+      subject: "🗳️ New Council Agenda Ready for SheVegas Democracy"
+      to: ${{ secrets.NOTIFICATION_EMAIL }}
+      from: SheVegas Bot
+      body: |
+        New Common Council agenda detected!
+        
+        The ballot has been automatically generated and is ready for your review.
+        
+        NEXT STEPS:
+        1. Review generated ballot: automation/generated_ballot.html
+        2. Record audio explanations (see automation/audio_checklist.md)
+        3. Update index.html with new ballot content
+        4. Upload audio files to /audio/ directory
+        5. Commit and push changes
+        
+        The scraper runs every 6 hours, so you'll be notified as soon as agendas are published.
+        
+        ---
+        SheVegas Direct Democracy
+        Automated Agenda Monitor
+  
+  - name: Create Pull Request (optional)
+    if: steps.check.outputs.found == 'true'
+    uses: peter-evans/create-pull-request@v5
+    with:
+      commit-message: 'New ballot generated from council agenda'
+      title: '🗳️ New Ballot Ready for Review'
+      body: |
+        ## New Council Agenda Detected
+        
+        Automated ballot generation complete.
+        
+        **Files generated:**
+        - `automation/generated_ballot.html` - Ready-to-use ballot HTML
+        - `automation/audio_checklist.md` - Recording checklist
+        - `automation/agenda_data.json` - Raw agenda data
+        
+        **Next steps:**
+        1. Review the generated ballot
+        2. Record audio explanations
+        3. Copy ballot HTML into index.html
+        4. Upload audio files
+        5. Merge this PR to deploy
+        
+        **Or:** Close this PR and make changes manually in your own branch.
+      branch: auto-ballot-update
+      delete-branch: true
+  
+  - name: Log run completion
+    if: always()
+    run: |
+      echo "Scraper run completed at $(date)"
+      echo "New agenda found: ${{ steps.check.outputs.found }}"
+```
