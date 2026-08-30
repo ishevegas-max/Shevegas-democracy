@@ -1,0 +1,198 @@
+{
+  "start": "land",
+  "nodes": {
+    "land": {
+      "speak": "Be your own superhero. The future needs you.",
+      "audio": "clips/door-bite.m4a",
+      "line": "THIS IS SHEBOYGAN",
+      "choices": [
+        {
+          "label": "Food",
+          "next": "food",
+          "audio": "clips/sale-food.m4a"
+        },
+        {
+          "label": "Move",
+          "next": "move",
+          "audio": "clips/sale-move.m4a"
+        },
+        {
+          "label": "Water",
+          "next": "water",
+          "audio": "clips/sale-water.m4a"
+        },
+        {
+          "label": "Nothing",
+          "next": "nothing",
+          "audio": "clips/sale-nothing.m4a"
+        }
+      ]
+    },
+    "food": {
+      "speak": "Hungry. Brat fry, lake perch, or something only you know.",
+      "line": "FIND FOOD",
+      "choices": [
+        {
+          "label": "Brat fry",
+          "next": "brat"
+        },
+        {
+          "label": "On the water",
+          "next": "perch"
+        },
+        {
+          "label": "Back",
+          "next": "land"
+        }
+      ]
+    },
+    "brat": {
+      "speak": "Friday night. Smoke in the air. You already know the corner.",
+      "line": "BRAT FRY",
+      "choices": [
+        {
+          "label": "Keep walking",
+          "next": "move"
+        },
+        {
+          "label": "Sit with it",
+          "next": "nowhere"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "perch": {
+      "speak": "Harbor. Fried perch. You can hear the boats from the plate.",
+      "line": "ON THE WATER",
+      "choices": [
+        {
+          "label": "Walk it off",
+          "next": "move"
+        },
+        {
+          "label": "Stay",
+          "next": "nowhere"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "move": {
+      "speak": "Lakefront. Lighthouse. Twenty miles if you want them.",
+      "line": "KEEP MOVING",
+      "choices": [
+        {
+          "label": "Lighthouse",
+          "next": "light"
+        },
+        {
+          "label": "Just walk",
+          "next": "walk"
+        },
+        {
+          "label": "Back",
+          "next": "land"
+        }
+      ]
+    },
+    "light": {
+      "speak": "Red lighthouse. Stone pier. The lake is the whole show.",
+      "line": "THE LIGHT",
+      "choices": [
+        {
+          "label": "Food after",
+          "next": "food"
+        },
+        {
+          "label": "Nowhere",
+          "next": "nowhere"
+        },
+        {
+          "label": "Back",
+          "next": "move"
+        }
+      ]
+    },
+    "walk": {
+      "speak": "No destination. Just the miles. Drop a pin when you have one.",
+      "line": "THE WALK",
+      "choices": [
+        {
+          "label": "Food",
+          "next": "food"
+        },
+        {
+          "label": "Sit",
+          "next": "nowhere"
+        },
+        {
+          "label": "Back",
+          "next": "move"
+        }
+      ]
+    },
+    "nowhere": {
+      "speak": "Nowhere is a place here. Water. Sky. You.",
+      "line": "NOWHERE",
+      "choices": [
+        {
+          "label": "Listen again",
+          "next": "land"
+        },
+        {
+          "label": "Food",
+          "next": "food"
+        },
+        {
+          "label": "Move",
+          "next": "move"
+        }
+      ]
+    },
+    "water": {
+      "speak": "The lake is the whole show. Surf, harbor, the whole future.",
+      "line": "WATER",
+      "choices": [
+        {
+          "label": "On the water",
+          "next": "perch"
+        },
+        {
+          "label": "Lighthouse",
+          "next": "light"
+        },
+        {
+          "label": "Back",
+          "next": "land"
+        }
+      ]
+    },
+    "nothing": {
+      "speak": "Hiding alone. Nowhere is a place here. Water. Sky. You.",
+      "line": "HIDING ALONE",
+      "choices": [
+        {
+          "label": "Listen again",
+          "next": "land"
+        },
+        {
+          "label": "Food",
+          "next": "food"
+        },
+        {
+          "label": "Move",
+          "next": "move"
+        },
+        {
+          "label": "Water",
+          "next": "water"
+        }
+      ]
+    }
+  }
+}
