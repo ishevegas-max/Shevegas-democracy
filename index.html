@@ -14,7 +14,36 @@
     </picture>
     <h1 class="mark">SHEVEGAS</h1>
     <p id="line" class="line">THIS IS SHEBOYGAN</p>
+
+    <div id="board" class="board" hidden>
+      <svg class="geo" viewBox="0 0 100 140" preserveAspectRatio="none" aria-hidden="true">
+        <path class="lake-fill" d="M69,0 L100,0 L100,140 L67,140 C76,112 64,90 69,68 C74,46 66,20 69,0 Z" />
+        <path class="beach-fill" d="M66,0 C63,20 71,46 66,68 C61,90 73,112 64,140 L60,140 C69,112 57,90 62,68 C67,46 59,20 62,0 Z" />
+        <path class="river-stroke" d="M4,82 C20,80 32,72 44,68 C56,64 62,62 69,70" />
+        <path class="path-stroke" d="M72,16 C78,34 70,48 76,62 C82,78 74,100 80,128" />
+      </svg>
+      <div class="eighth" aria-hidden="true"></div>
+      <div class="blocks b-north" aria-hidden="true"></div>
+      <div class="blocks b-down" aria-hidden="true"></div>
+      <div class="blocks b-south" aria-hidden="true"></div>
+      <div class="tree t1" aria-hidden="true"></div>
+      <div class="tree t2" aria-hidden="true"></div>
+      <div class="tree t3" aria-hidden="true"></div>
+      <div class="boat" aria-hidden="true"></div>
+      <div class="bench" aria-hidden="true"></div>
+      <p class="geo-label lake-name">LAKE MICHIGAN</p>
+      <p class="geo-label river-name">RIVER</p>
+      <p class="geo-label street-name">8TH ST</p>
+      <button id="lighthouse" class="lighthouse" type="button" data-go="light" aria-label="Lighthouse">
+        <span class="lamp"></span>
+      </button>
+      <div id="places" class="places"></div>
+      <div id="pawn" class="pawn" hidden>★</div>
+      <div id="whoosh" class="whoosh-burst" hidden>WHOOSH</div>
+    </div>
+
     <button id="talk" class="talk" type="button" hidden>TALK</button>
+    <button id="mapbtn" class="mapbtn" type="button" hidden>MAP · WALK</button>
     <div id="choices" class="choices" hidden></div>
     <button id="wake" class="wake" type="button"><span>Tap to listen</span></button>
   </main>

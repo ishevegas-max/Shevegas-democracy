@@ -2,6 +2,12 @@ const lineEl = document.getElementById("line");
 const choicesEl = document.getElementById("choices");
 const wakeEl = document.getElementById("wake");
 const talkEl = document.getElementById("talk");
+const mapBtn = document.getElementById("mapbtn");
+const boardEl = document.getElementById("board");
+const placesEl = document.getElementById("places");
+const pawnEl = document.getElementById("pawn");
+const whooshEl = document.getElementById("whoosh");
+const stageEl = document.getElementById("stage");
 const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 let tree = null;
@@ -10,6 +16,40 @@ let speakGen = 0;
 let popGen = 0;
 let currentAudio = null;
 let rec = null;
+let currentId = null;
+let pinsPopped = false;
+let walking = false;
+
+const TALK_HITS = [
+  [/il ritrovo|ritrovo|neapolitan/, "ilritrovo"],
+  [/stefano stretch|the stretch/, "stefano"],
+  [/stefano|trattoria/, "stefanos"],
+  [/field to fork|field/, "fieldtofork"],
+  [/slo food|grocery|market/, "slofood"],
+  [/black pig|\bpig\b/, "blackpig"],
+  [/tochi|toshi|ramen/, "tochi"],
+  [/umi|sushi|hibachi/, "umi"],
+  [/spices|indian/, "indian"],
+  [/majerle|wand|black river/, "majerle"],
+  [/turk|timber/, "turks"],
+  [/bourbon/, "bourbon"],
+  [/blast|chester|soft serve|ice cream/, "blast"],
+  [/bar pizza/, "barpizza"],
+  [/pizza|triangle/, "pizza"],
+  [/bar food|\bbars\b/, "bars"],
+  [/brat/, "brat"],
+  [/perch/, "perch"],
+  [/lighthouse|the light/, "light"],
+  [/school|campus|university|college|uw|green bay/, "school"],
+  [/downtown|eighth|8th|going out/, "downtown"],
+  [/north/, "north"],
+  [/south/, "south"],
+  [/map|city|board|sheboygan/, "map"],
+  [/food|eat|hungry|bite/, "food"],
+  [/move|walk|foot|run|pier|miles/, "move"],
+  [/water|lake|swim|surf|splash|harbor|beach/, "water"],
+  [/nothing|nowhere|hid|alone|quiet|hush|bench/, "nothing"],
+];
 
 function stopAudio() {
   if (!currentAudio) return;
@@ -27,13 +67,7 @@ function stopListen() {
 
 function routeTalk(text) {
   const t = String(text || "").toLowerCase();
-  const hits = [
-    [/food|eat|hungry|brat|perch|bite|pizza|grocery|stefano|indian|spice|bar|majerle|turk|pig|ramen|sushi|hibachi/, "food"],
-    [/move|walk|foot|run/, "move"],
-    [/water|lake|swim|surf|splash|harbor/, "water"],
-    [/nothing|nowhere|hid|alone|quiet|hush/, "nothing"],
-  ];
-  for (const [re, id] of hits) {
+  for (const [re, id] of TALK_HITS) {
     if (re.test(t) && tree.nodes[id]) {
       go(id);
       return true;
@@ -135,10 +169,7 @@ function renderChoices(node) {
     const b = document.createElement("button");
     b.type = "button";
     b.textContent = c.label;
-    b.addEventListener("click", () => {
-      if (c.href) window.open(c.href, "_blank", "noopener,noreferrer");
-      if (c.next) go(c.next);
-    });
+    b.addEventListener("click", () => go(c.next));
     choicesEl.appendChild(b);
 
     let advanced = false;
@@ -173,18 +204,185 @@ function bumpLine(text) {
   lineEl.style.animation = "";
 }
 
+function boardSpot(id) {
+  const node = tree.nodes[id];
+  const anchor = (node && node.anchor) || id;
+  return (tree.board || []).find((p) => p.id === anchor) || null;
+}
+
+function setPawn(spot, instant) {
+  if (!spot) return;
+  pawnEl.hidden = false;
+  if (instant) pawnEl.style.transition = "none";
+  pawnEl.style.left = spot.x + "%";
+  pawnEl.style.top = spot.y + "%";
+  if (instant) {
+    void pawnEl.offsetWidth;
+    pawnEl.style.transition = "";
+  }
+}
+
+function markHere(id) {
+  const anchor = (tree.nodes[id] && tree.nodes[id].anchor) || id;
+  for (const btn of placesEl.querySelectorAll(".place")) {
+    btn.classList.toggle("here", btn.dataset.id === anchor);
+  }
+}
+
+function setMode(mode) {
+  stageEl.classList.remove("on-map", "in-place");
+  if (mode === "map") stageEl.classList.add("on-map");
+  if (mode === "place") stageEl.classList.add("in-place");
+  boardEl.hidden = mode === "door";
+  mapBtn.hidden = mode !== "place";
+  if (mode === "door") {
+    choicesEl.hidden = true;
+    pawnEl.hidden = true;
+  }
+}
+
+function paintBoard() {
+  placesEl.innerHTML = "";
+  for (const p of tree.board || []) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "place";
+    b.dataset.id = p.id;
+    b.dataset.tone = p.tone || "tangerine";
+    b.style.left = p.x + "%";
+    b.style.top = p.y + "%";
+    b.append(p.label);
+    if (p.tag) {
+      const tag = document.createElement("span");
+      tag.className = "tag";
+      tag.textContent = p.tag;
+      b.appendChild(tag);
+    }
+    b.addEventListener("click", () => go(p.id));
+    placesEl.appendChild(b);
+  }
+}
+
+function walkTo(id, done) {
+  const spot = boardSpot(id);
+  if (!spot) {
+    done();
+    return;
+  }
+  walking = true;
+  bumpLine("WHOOSH");
+  pawnEl.classList.add("hop");
+  boardEl.classList.add("whooshing");
+  whooshEl.hidden = false;
+  whooshEl.style.animation = "none";
+  void whooshEl.offsetWidth;
+  whooshEl.style.animation = "";
+  setPawn(spot, false);
+  setTimeout(() => {
+    pawnEl.classList.remove("hop");
+    boardEl.classList.remove("whooshing");
+    whooshEl.hidden = true;
+    walking = false;
+    done();
+  }, 580);
+}
+
+function showMap(opts) {
+  const first = !!(opts && opts.first);
+  popGen += 1;
+  stopAudio();
+  try { window.speechSynthesis.cancel(); } catch (_) {}
+  currentId = "map";
+  setMode("map");
+  choicesEl.hidden = true;
+  choicesEl.innerHTML = "";
+  bumpLine(tree.nodes.map.line);
+  const home = (tree.board || []).find((p) => p.id === "downtown") || tree.board[0];
+  setPawn(home, !(opts && opts.keepPawn));
+  markHere("downtown");
+  pawnEl.hidden = false;
+  if (first && !pinsPopped) staggerPins();
+  startListen();
+}
+
+function staggerPins() {
+  pinsPopped = true;
+  const gen = popGen;
+  const land = tree.nodes.land;
+  const pins = (land.choices || []).filter((c) => c.audio);
+  let i = 0;
+  const step = () => {
+    if (gen !== popGen || currentId !== "map") return;
+    if (i >= pins.length) return;
+    const c = pins[i++];
+    const el = placesEl.querySelector('.place[data-id="' + c.next + '"]');
+    if (el) {
+      el.classList.remove("bam");
+      void el.offsetWidth;
+      el.classList.add("bam");
+    }
+    stopAudio();
+    const a = new Audio(c.audio);
+    currentAudio = a;
+    const next = () => {
+      if (gen !== popGen) return;
+      step();
+    };
+    a.onended = next;
+    a.onerror = next;
+    const p = a.play();
+    if (p && p.catch) p.catch(next);
+    clearTimeout(chipTimer);
+    chipTimer = setTimeout(next, 1800);
+  };
+  step();
+}
+
+function arrive(id) {
+  const node = tree.nodes[id];
+  currentId = id;
+  setMode("place");
+  bumpLine(node.line);
+  markHere(id);
+  const spot = boardSpot(id);
+  if (spot) setPawn(spot, true);
+  speak(node, () => {
+    renderChoices(node);
+    startListen();
+  });
+}
+
 function go(id) {
+  if (walking) return;
   popGen += 1;
   stopListen();
   const node = tree.nodes[id];
   if (!node) return;
-  bumpLine(node.line);
-  choicesEl.hidden = true;
-  choicesEl.innerHTML = "";
-  speak(node, () => {
-    renderChoices(node);
-    if (id === tree.start) startListen();
-  });
+
+  if (id === "map" || node.hub) {
+    if (currentId && currentId !== "map" && currentId !== "land") {
+      walkTo("downtown", () => showMap({ first: false, keepPawn: true }));
+    } else {
+      showMap({ first: false });
+    }
+    return;
+  }
+
+  if (id === tree.start) {
+    currentId = id;
+    setMode("door");
+    bumpLine(node.line);
+    speak(node, () => showMap({ first: true }));
+    return;
+  }
+
+  const from = currentId;
+  const shouldWalk = from && from !== id && from !== "land";
+  if (shouldWalk) {
+    walkTo(id, () => arrive(id));
+  } else {
+    arrive(id);
+  }
 }
 
 function start() {
@@ -195,6 +393,7 @@ function start() {
 
 async function boot() {
   tree = await fetch("tree.json").then((r) => r.json());
+  paintBoard();
   const land = tree.nodes[tree.start];
   if (land && land.line) bumpLine(land.line);
   wakeEl.classList.add("show");
@@ -203,6 +402,9 @@ async function boot() {
     if (talkEl.classList.contains("hot")) stopListen();
     else startListen();
   });
+  mapBtn.addEventListener("click", () => go("map"));
+  const light = document.getElementById("lighthouse");
+  if (light) light.addEventListener("click", () => go("light"));
 }
 
 boot();

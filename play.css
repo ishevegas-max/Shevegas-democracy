@@ -89,6 +89,8 @@ body {
   min-width: 0;
   animation: popWin 0.38s cubic-bezier(.2,1.4,.3,1) both;
   width: 100%;
+  touch-action: manipulation;
+  line-height: 1.05;
 }
 .choices button:last-child:nth-child(odd) {
   grid-column: 1 / -1;
@@ -126,12 +128,10 @@ body {
   from { opacity: 0; transform: translateY(18px) scale(0.96); }
   to { opacity: 1; transform: none; }
 }
-
 @keyframes popWin {
   from { opacity: 0; transform: scale(0.55) translateY(18px); }
   to { opacity: 1; transform: none; }
 }
-
 .talk {
   position: absolute;
   left: 50%;
@@ -149,9 +149,411 @@ body {
   padding: 0.45em 1.2em;
   border-radius: 999px;
   box-shadow: 0 4px 0 var(--ink);
+  touch-action: manipulation;
 }
 .talk.hot {
   background: linear-gradient(#fff36a, #ffd000);
   animation: popWin 0.28s cubic-bezier(.2,1.4,.3,1) both;
 }
 .talk:active { transform: translateX(-50%) translateY(2px); box-shadow: 0 2px 0 var(--ink); }
+
+/* ——— city board ——— */
+#stage.on-map .mark,
+#stage.in-place .mark {
+  font-size: clamp(28px, 8.5vw, 48px);
+  -webkit-text-stroke: 3px #ffd36a;
+}
+#stage.on-map .line,
+#stage.in-place .line {
+  top: max(7.2dvh, calc(env(safe-area-inset-top) + 36px));
+  font-size: clamp(20px, 6vw, 34px);
+  z-index: 7;
+}
+#stage.on-map .talk,
+#stage.in-place .talk {
+  top: auto;
+  left: 4vw;
+  transform: none;
+  bottom: max(2.4dvh, env(safe-area-inset-bottom));
+  font-size: clamp(14px, 3.8vw, 18px);
+  padding: 0.4em 0.95em;
+  z-index: 8;
+}
+#stage.on-map .talk:active,
+#stage.in-place .talk:active {
+  transform: translateY(2px);
+}
+.mapbtn {
+  position: absolute;
+  right: 4vw;
+  bottom: max(2.4dvh, env(safe-area-inset-bottom));
+  z-index: 8;
+  appearance: none;
+  border: 3px solid var(--ink);
+  background: linear-gradient(#ffd36a, #ff7a2f);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 900;
+  font-size: clamp(14px, 3.8vw, 18px);
+  letter-spacing: 0.12em;
+  padding: 0.4em 0.95em;
+  border-radius: 999px;
+  box-shadow: 0 4px 0 var(--ink);
+  touch-action: manipulation;
+}
+.mapbtn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--ink); }
+
+.board {
+  position: absolute;
+  left: 3vw;
+  right: 3vw;
+  top: 14.5dvh;
+  bottom: 11dvh;
+  z-index: 4;
+  overflow: hidden;
+  border: 4px solid var(--ink);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 20% 30%, #9be36a 0 18%, transparent 19%),
+    radial-gradient(circle at 48% 70%, #7bc44d 0 14%, transparent 15%),
+    linear-gradient(#8fd85a, #5aaa38);
+  box-shadow: 0 7px 0 var(--ink);
+  animation: floatIn 0.45s ease-out both;
+}
+.board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.14;
+  background: radial-gradient(#2a1020 1.1px, transparent 1.25px) 0 0 / 7px 7px;
+  z-index: 1;
+}
+#stage.in-place .board {
+  bottom: 36dvh;
+}
+#stage.in-place .choices {
+  bottom: max(7.5dvh, calc(env(safe-area-inset-bottom) + 42px));
+}
+#stage.on-map .board {
+  bottom: 11dvh;
+}
+
+.geo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.lake-fill { fill: #1ea8ff; }
+.beach-fill { fill: #f6d58a; }
+.river-stroke {
+  fill: none;
+  stroke: #5ee0ff;
+  stroke-width: 4.2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 0.6px #2a1020);
+}
+.path-stroke {
+  fill: none;
+  stroke: #ffd36a;
+  stroke-width: 1.6;
+  stroke-dasharray: 3 2.4;
+  stroke-linecap: round;
+  opacity: 0.95;
+}
+
+.eighth {
+  position: absolute;
+  left: 28%;
+  top: 16%;
+  width: 7px;
+  height: 68%;
+  background: repeating-linear-gradient(
+    180deg,
+    #ffd36a 0 10px,
+    #2a1020 10px 12px,
+    #ffd36a 12px 22px
+  );
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  z-index: 1;
+  box-shadow: 3px 0 0 #c94b2a;
+}
+
+.blocks {
+  position: absolute;
+  z-index: 1;
+  width: 12px;
+  height: 14px;
+  background: #ffb347;
+  border: 2px solid var(--ink);
+  box-shadow:
+    16px 0 0 0 #ff7a2f,
+    32px 6px 0 0 #e31b23,
+    8px 18px 0 0 #ffd36a,
+    24px 20px 0 0 #c45c2a,
+    40px 16px 0 0 #ff4d6d;
+}
+.b-north { top: 8%; left: 10%; }
+.b-down { top: 42%; left: 8%; transform: scale(1.15); }
+.b-south { top: 72%; left: 14%; }
+
+.tree {
+  position: absolute;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #2f8a3a;
+  border: 2px solid var(--ink);
+}
+.tree::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 4px;
+  height: 7px;
+  background: #5a2a12;
+  transform: translateX(-50%);
+}
+.t1 { top: 22%; left: 4%; }
+.t2 { top: 58%; left: 4%; }
+.t3 { top: 86%; left: 42%; }
+
+.boat {
+  position: absolute;
+  right: 6%;
+  top: 46%;
+  z-index: 1;
+  width: 22px;
+  height: 10px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 0 0 12px 12px;
+}
+.boat::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  border-left: 7px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 14px solid #ff3b7a;
+}
+
+.bench {
+  position: absolute;
+  left: 6%;
+  top: 61%;
+  z-index: 1;
+  width: 22px;
+  height: 8px;
+  background: #8b5a2b;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  box-shadow: 0 6px 0 var(--ink);
+}
+
+.geo-label {
+  position: absolute;
+  z-index: 2;
+  font-weight: 900;
+  color: #fff;
+  -webkit-text-stroke: 1px var(--ink);
+  paint-order: stroke fill;
+  pointer-events: none;
+  letter-spacing: 0.12em;
+}
+.lake-name {
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: right center;
+  font-size: clamp(11px, 3vw, 14px);
+  white-space: nowrap;
+  color: #fff8c8;
+}
+.river-name {
+  left: 18%;
+  top: 54%;
+  font-size: 11px;
+  color: #e8ffff;
+  transform: rotate(-12deg);
+}
+.street-name {
+  left: 31%;
+  top: 18%;
+  font-size: 10px;
+  color: var(--ink);
+  -webkit-text-stroke: 0;
+  background: #ffd36a;
+  border: 2px solid var(--ink);
+  padding: 1px 4px;
+  border-radius: 6px;
+}
+
+.lighthouse {
+  position: absolute;
+  right: 7%;
+  top: 10%;
+  z-index: 3;
+  width: 16px;
+  height: 38px;
+  padding: 0;
+  border: 2px solid var(--ink);
+  background: repeating-linear-gradient(#e31b23 0 10px, #fff 10px 14px);
+  border-radius: 3px 3px 2px 2px;
+  box-shadow: 0 3px 0 var(--ink);
+  cursor: pointer;
+}
+.lighthouse .lamp {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 14px;
+  height: 10px;
+  background: #ffd36a;
+  border: 2px solid var(--ink);
+  border-radius: 4px 4px 0 0;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px #ffd36a;
+}
+
+.places { position: absolute; inset: 0; z-index: 3; }
+.place {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  appearance: none;
+  border: 3px solid var(--ink);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 900;
+  font-size: clamp(13px, 3.7vw, 18px);
+  letter-spacing: 0.03em;
+  line-height: 0.9;
+  padding: 0.38em 0.42em;
+  border-radius: 12px;
+  box-shadow: 0 4px 0 var(--ink);
+  white-space: pre-line;
+  text-align: center;
+  min-width: 4.6em;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+.place:nth-child(even) { transform: translate(-50%, -50%) rotate(2.4deg); }
+.place .tag {
+  display: block;
+  font-size: 0.62em;
+  letter-spacing: 0.14em;
+  margin-top: 0.15em;
+  opacity: 0.9;
+}
+.place[data-tone="coral"] { background: linear-gradient(#ff9a7a, #ff4d6d); }
+.place[data-tone="gold"] { background: linear-gradient(#fff1a8, #ffd36a); }
+.place[data-tone="tangerine"] { background: linear-gradient(#ffd36a, #ff7a2f); }
+.place[data-tone="pink"] { background: linear-gradient(#ff8ac0, #ff3b7a); }
+.place[data-tone="cyan"] { background: linear-gradient(#9ef0ff, #2eb7ff); }
+.place[data-tone="lime"] { background: linear-gradient(#c4ff6a, #12c48b); }
+.place[data-tone="sunset"] { background: linear-gradient(#ffb347, #ff6b3d); }
+.place[data-tone="cream"] { background: linear-gradient(#fff6c8, #ffb347); }
+.place[data-tone="quiet"] {
+  background: linear-gradient(#ddd0e8, #a392b3);
+  font-size: clamp(11px, 3.1vw, 14px);
+  box-shadow: 0 3px 0 #6a5a78;
+  padding: 0.28em 0.36em;
+}
+.place.here {
+  z-index: 5;
+  outline: 3px solid #fff;
+  transform: translate(-50%, -50%) scale(1.08) rotate(-1deg);
+}
+.place.bam {
+  animation: popPin 0.42s cubic-bezier(.2,1.4,.3,1) both;
+}
+.place:nth-child(even).bam {
+  animation-name: popPinEven;
+}
+@keyframes popPin {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.55) rotate(-8deg); }
+  to { opacity: 1; transform: translate(-50%, -50%) rotate(-2deg); }
+}
+@keyframes popPinEven {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.55) rotate(8deg); }
+  to { opacity: 1; transform: translate(-50%, -50%) rotate(2.4deg); }
+}
+.place:active { translate: 0 2px; box-shadow: 0 2px 0 var(--ink); }
+
+.pawn {
+  position: absolute;
+  z-index: 6;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6c8, #ffd36a 55%, #ff7a2f);
+  border: 3px solid var(--ink);
+  box-shadow: 0 3px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  color: #e31b23;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: left 0.55s cubic-bezier(.2,.8,.2,1), top 0.55s cubic-bezier(.2,.8,.2,1);
+}
+.pawn.hop {
+  animation: hop 0.55s ease-in-out;
+}
+@keyframes hop {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -18px; }
+}
+
+.whoosh-burst {
+  position: absolute;
+  z-index: 7;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  font-weight: 900;
+  font-size: clamp(28px, 9vw, 48px);
+  color: #e31b23;
+  -webkit-text-stroke: 4px #ffd36a;
+  paint-order: stroke fill;
+  text-shadow: 0 4px 0 var(--ink);
+  pointer-events: none;
+  animation: whooshPop 0.55s cubic-bezier(.2,1.4,.3,1) both;
+}
+.board.whooshing {
+  filter: contrast(1.08) saturate(1.15);
+}
+.board.whooshing::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    105deg,
+    transparent 0 12px,
+    rgba(255, 211, 106, 0.28) 12px 14px
+  );
+  animation: speedlines 0.45s linear;
+}
+@keyframes whooshPop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4) rotate(-12deg); }
+  55% { opacity: 1; transform: translate(-50%, -58%) scale(1.15) rotate(-6deg); }
+  100% { opacity: 0; transform: translate(-50%, -70%) scale(1.05) rotate(-4deg); }
+}
+@keyframes speedlines {
+  from { opacity: 0.7; background-position: 0 0; }
+  to { opacity: 0; background-position: 40px 0; }
+}
+
+@media (orientation: landscape) {
+  .board { top: 16dvh; }
+  #stage.on-map .board { left: 18vw; right: 18vw; }
+  .place { font-size: clamp(12px, 2.2vw, 16px); }
+}

@@ -1,5 +1,78 @@
 {
   "start": "land",
+  "hub": "map",
+  "board": [
+    {
+      "id": "north",
+      "label": "NORTH\nSIDE",
+      "x": 26,
+      "y": 12,
+      "tone": "coral"
+    },
+    {
+      "id": "school",
+      "label": "SCHOOL",
+      "x": 13,
+      "y": 27,
+      "tone": "gold",
+      "tag": "UWGB"
+    },
+    {
+      "id": "downtown",
+      "label": "DOWNTOWN",
+      "x": 30,
+      "y": 46,
+      "tone": "tangerine",
+      "tag": "8TH ST"
+    },
+    {
+      "id": "food",
+      "label": "FOOD",
+      "x": 50,
+      "y": 40,
+      "tone": "pink",
+      "pin": true
+    },
+    {
+      "id": "water",
+      "label": "WATER",
+      "x": 83,
+      "y": 18,
+      "tone": "cyan",
+      "pin": true
+    },
+    {
+      "id": "blast",
+      "label": "BLAST",
+      "x": 82,
+      "y": 36,
+      "tone": "cream",
+      "tag": "MARINA"
+    },
+    {
+      "id": "move",
+      "label": "MOVE",
+      "x": 78,
+      "y": 58,
+      "tone": "lime",
+      "pin": true
+    },
+    {
+      "id": "nothing",
+      "label": "NOTHING",
+      "x": 12,
+      "y": 62,
+      "tone": "quiet",
+      "pin": true
+    },
+    {
+      "id": "south",
+      "label": "SOUTH\nSIDE",
+      "x": 28,
+      "y": 80,
+      "tone": "sunset"
+    }
+  ],
   "nodes": {
     "land": {
       "speak": "Be your own superhero. The future needs you.",
@@ -28,17 +101,19 @@
         }
       ]
     },
+    "map": {
+      "hub": true,
+      "speak": "This is Sheboygan. Walk it.",
+      "line": "WALK THE CITY"
+    },
     "food": {
-      "speak": "Pizza first. Then the bars. Every bar is dinner. Local Guide. Get there and you will eat well.",
+      "speak": "Hungry. Brat fry, lake perch, or something only you know.",
       "line": "FIND FOOD",
+      "anchor": "food",
       "choices": [
         {
           "label": "Pizza",
           "next": "pizza"
-        },
-        {
-          "label": "Bars",
-          "next": "bars"
         },
         {
           "label": "Stefano",
@@ -49,244 +124,100 @@
           "next": "indian"
         },
         {
-          "label": "More",
-          "next": "food-more"
+          "label": "Core",
+          "next": "core"
         },
         {
-          "label": "Back",
-          "next": "land"
+          "label": "Bars",
+          "next": "bars"
+        },
+        {
+          "label": "Blast",
+          "next": "blast"
         }
       ]
     },
     "pizza": {
-      "speak": "This is a pizza town now. Start at the triangle on North 8th.",
-      "line": "PIZZA",
+      "speak": "Pizza triangle. The city has real variety. Quality. Styles. Il Ritrovo is a door. Bar pizza is a door.",
+      "line": "PIZZA TRIANGLE",
+      "anchor": "food",
       "choices": [
         {
-          "label": "The triangle",
-          "next": "triangle"
+          "label": "Il Ritrovo",
+          "next": "ilritrovo"
+        },
+        {
+          "label": "Bar pizza",
+          "next": "barpizza"
+        },
+        {
+          "label": "Stefano's",
+          "next": "stefanos"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "barpizza": {
+      "speak": "Bar pizza is a door here. Almost every bar feeds you. Walk the bars for the pie.",
+      "line": "BAR PIZZA",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Bars",
+          "next": "bars"
         },
         {
           "label": "Il Ritrovo",
-          "next": "il-ritrovo"
-        },
-        {
-          "label": "Faye's",
-          "next": "fayes"
-        },
-        {
-          "label": "Back",
-          "next": "food"
-        }
-      ]
-    },
-    "triangle": {
-      "speak": "North 8th and Michigan. Uptown Slice. Peabody’s. The Depot.",
-      "line": "THE TRIANGLE",
-      "choices": [
-        {
-          "label": "Uptown Slice",
-          "next": "uptown-slice"
-        },
-        {
-          "label": "Peabody's",
-          "next": "peabodys"
-        },
-        {
-          "label": "The Depot",
-          "next": "uptown-depot"
+          "next": "ilritrovo"
         },
         {
           "label": "Back",
           "next": "pizza"
-        }
-      ]
-    },
-    "uptown-slice": {
-      "speak": "1116 Michigan. Uptown Slice.",
-      "line": "UPTOWN SLICE",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Uptown+Slice+1116+Michigan+Ave+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.uptownslice.com/"
-        },
-        {
-          "label": "Back",
-          "next": "triangle"
-        }
-      ]
-    },
-    "peabodys": {
-      "speak": "1123 North 8th. Peabody’s Pizza.",
-      "line": "PEABODY'S",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Peabody's+Pizza+1123+N+8th+St+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "http://www.peabodyspizza.com/Home.htm"
-        },
-        {
-          "label": "Back",
-          "next": "triangle"
-        }
-      ]
-    },
-    "uptown-depot": {
-      "speak": "1217 North 8th. Uptown Slice Depot. Takeout.",
-      "line": "THE DEPOT",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Uptown+Slice+Depot+1217+N+8th+St+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.uptownslice.com/"
-        },
-        {
-          "label": "Back",
-          "next": "triangle"
-        }
-      ]
-    },
-    "il-ritrovo": {
-      "speak": "515 South 8th. Wood fire since 2000. Stefano pizza.",
-      "line": "IL RITROVO",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Il+Ritrovo+515+S+8th+St+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.ilritrovopizza.com/"
-        },
-        {
-          "label": "Stefano",
-          "next": "stefano"
-        },
-        {
-          "label": "Back",
-          "next": "pizza"
-        }
-      ]
-    },
-    "fayes": {
-      "speak": "1821 Calumet Drive. Since 1957.",
-      "line": "FAYE'S",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Faye's+Pizza+1821+Calumet+Dr+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.fayespizza.com/"
-        },
-        {
-          "label": "Back",
-          "next": "pizza"
-        }
-      ]
-    },
-    "bars": {
-      "speak": "Every bar is a restaurant. Majerle’s. Turk’s. The Black Pig.",
-      "line": "BARS",
-      "choices": [
-        {
-          "label": "Majerle's",
-          "next": "majerles"
-        },
-        {
-          "label": "Turk's and Timber's",
-          "next": "turks"
-        },
-        {
-          "label": "Black Pig",
-          "next": "black-pig"
-        },
-        {
-          "label": "Back",
-          "next": "food"
-        }
-      ]
-    },
-    "majerles": {
-      "speak": "5033 Evergreen. Majerle’s Black River Grill. The big one in the woods.",
-      "line": "MAJERLE'S",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Majerle's+Black+River+Grill+5033+Evergreen+Dr+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://blackrivergrill.com/"
-        },
-        {
-          "label": "Back",
-          "next": "bars"
-        }
-      ]
-    },
-    "turks": {
-      "speak": "1022 Michigan. Turk’s and Timber’s. Kitchen until ten.",
-      "line": "TURK'S AND TIMBER'S",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Turk's+and+Timber's+1022+Michigan+Ave+Sheboygan+WI"
-        },
-        {
-          "label": "Back",
-          "next": "bars"
-        }
-      ]
-    },
-    "black-pig": {
-      "speak": "821 North 8th. The Black Pig. Dinner at the bar.",
-      "line": "BLACK PIG",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Black+Pig+821+N+8th+St+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://eatblackpig.com/"
-        },
-        {
-          "label": "Back",
-          "next": "bars"
         }
       ]
     },
     "stefano": {
-      "speak": "South 8th and Pennsylvania. Trattoria. Pizza. Café. The grocer. Get there and you will eat well.",
-      "line": "STEFANO",
+      "speak": "The Stefano stretch. Four doors on one walk. Italian since 1994, pizza, breakfast, the market.",
+      "line": "STEFANO STRETCH",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Trattoria Stefano",
-          "next": "trattoria"
+          "label": "Stefano's",
+          "next": "stefanos"
         },
         {
           "label": "Il Ritrovo",
-          "next": "il-ritrovo"
+          "next": "ilritrovo"
         },
         {
           "label": "Field to Fork",
-          "next": "field"
+          "next": "fieldtofork"
         },
         {
-          "label": "Slo Food Market",
-          "next": "slo"
+          "label": "Slo Food",
+          "next": "slofood"
+        }
+      ]
+    },
+    "stefanos": {
+      "speak": "Trattoria Stefano. 522 South 8th. Italian since 1994. This is the door.",
+      "line": "STEFANO'S",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Il Ritrovo",
+          "next": "ilritrovo"
+        },
+        {
+          "label": "Field to Fork",
+          "next": "fieldtofork"
+        },
+        {
+          "label": "The stretch",
+          "next": "stefano"
         },
         {
           "label": "Back",
@@ -294,79 +225,87 @@
         }
       ]
     },
-    "trattoria": {
-      "speak": "522 South 8th. Trattoria Stefano. Italian. Steak lives here too.",
-      "line": "TRATTORIA STEFANO",
+    "ilritrovo": {
+      "speak": "Il Ritrovo. 515 South 8th. Wood-fired pizza on the Stefano stretch. This is the door.",
+      "line": "IL RITROVO",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Trattoria+Stefano+522+S+8th+St+Sheboygan+WI"
+          "label": "Stefano's",
+          "next": "stefanos"
         },
         {
-          "label": "Site",
-          "href": "https://www.trattoriastefano.com/"
+          "label": "Field to Fork",
+          "next": "fieldtofork"
+        },
+        {
+          "label": "Pizza triangle",
+          "next": "pizza"
         },
         {
           "label": "Back",
-          "next": "stefano"
+          "next": "food"
         }
       ]
     },
-    "slo": {
-      "speak": "731 Pennsylvania. Stefano’s Slo Food Market. The grocer.",
-      "line": "SLO FOOD MARKET",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Stefano's+Slo+Food+Market+731+Pennsylvania+Ave+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.slofoodmarket.com/"
-        },
-        {
-          "label": "Back",
-          "next": "stefano"
-        }
-      ]
-    },
-    "field": {
-      "speak": "511 South 8th. Field to Fork. Breakfast and lunch. Since 2005.",
+    "fieldtofork": {
+      "speak": "Field to Fork. 511 South 8th. Breakfast and lunch on the stretch. This is the door.",
       "line": "FIELD TO FORK",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Field+to+Fork+511+S+8th+St+Sheboygan+WI"
+          "label": "Slo Food",
+          "next": "slofood"
         },
         {
-          "label": "Site",
-          "href": "https://www.fieldtoforkcafe.com/"
+          "label": "Stefano's",
+          "next": "stefanos"
+        },
+        {
+          "label": "The stretch",
+          "next": "stefano"
         },
         {
           "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "slofood": {
+      "speak": "Slo Food Market. 731 Pennsylvania. Downtown grocery on the Stefano stretch. This is the door.",
+      "line": "SLO FOOD MARKET",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Field to Fork",
+          "next": "fieldtofork"
+        },
+        {
+          "label": "Blast",
+          "next": "blast"
+        },
+        {
+          "label": "The stretch",
           "next": "stefano"
+        },
+        {
+          "label": "Back",
+          "next": "food"
         }
       ]
     },
     "indian": {
-      "speak": "The Spices. Downtown and south. Curry Corner. Nanglo.",
-      "line": "INDIAN",
+      "speak": "Indian on Eighth. The Spices. 1132 North 8th. Downtown. This is the door.",
+      "line": "THE SPICES",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Spices downtown",
-          "next": "spices-downtown"
+          "label": "Downtown",
+          "next": "downtown"
         },
         {
-          "label": "Spices south",
-          "next": "spices-south"
-        },
-        {
-          "label": "Curry Corner",
-          "next": "curry-corner"
-        },
-        {
-          "label": "Nanglo",
-          "next": "nanglo"
+          "label": "Core",
+          "next": "core"
         },
         {
           "label": "Back",
@@ -374,80 +313,17 @@
         }
       ]
     },
-    "spices-downtown": {
-      "speak": "1132 North 8th. The Spices. On the pizza block.",
-      "line": "THE SPICES DOWNTOWN",
+    "core": {
+      "speak": "Eighth Street core. Comfort food, ramen, sushi that pops. Real doors.",
+      "line": "THE CORE",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=The+Spices+Restaurant+1132+N+8th+St+Sheboygan+WI"
+          "label": "Black Pig",
+          "next": "blackpig"
         },
         {
-          "label": "Back",
-          "next": "indian"
-        }
-      ]
-    },
-    "spices-south": {
-      "speak": "4604 South Business Drive. The Spices.",
-      "line": "THE SPICES SOUTH",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=The+Spices+Restaurant+4604+S+Business+Dr+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.thespicesrestaurantbar.com/"
-        },
-        {
-          "label": "Back",
-          "next": "indian"
-        }
-      ]
-    },
-    "curry-corner": {
-      "speak": "915 Erie. Curry Corner.",
-      "line": "CURRY CORNER",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Curry+Corner+915+Erie+Ave+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.currycornerwi.com/"
-        },
-        {
-          "label": "Back",
-          "next": "indian"
-        }
-      ]
-    },
-    "nanglo": {
-      "speak": "1410 Indiana. Nanglo Momos and Curry.",
-      "line": "NANGLO",
-      "choices": [
-        {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Nanglo+Momos+1410+Indiana+Ave+Sheboygan+WI"
-        },
-        {
-          "label": "Site",
-          "href": "https://www.nanglomomo.com/"
-        },
-        {
-          "label": "Back",
-          "next": "indian"
-        }
-      ]
-    },
-    "food-more": {
-      "speak": "Ramen. Hibachi. Brat fry. Lake perch.",
-      "line": "MORE",
-      "choices": [
-        {
-          "label": "Tochi Ramen",
+          "label": "Tochi",
           "next": "tochi"
         },
         {
@@ -455,12 +331,27 @@
           "next": "umi"
         },
         {
-          "label": "Brat fry",
-          "next": "brat"
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "blackpig": {
+      "speak": "The Black Pig. 821 North 8th. Comfort food. Local. The core. This is the door.",
+      "line": "BLACK PIG",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Tochi",
+          "next": "tochi"
         },
         {
-          "label": "On the water",
-          "next": "perch"
+          "label": "Umi",
+          "next": "umi"
+        },
+        {
+          "label": "Bars",
+          "next": "bars"
         },
         {
           "label": "Back",
@@ -469,40 +360,158 @@
       ]
     },
     "tochi": {
-      "speak": "623 North 8th. Tochi Ramen.",
+      "speak": "Tochi Ramen. 623 North 8th. He said Toshi. The door says Tochi. This is the door.",
       "line": "TOCHI RAMEN",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Tochi+Ramen+623+N+8th+St+Sheboygan+WI"
+          "label": "Black Pig",
+          "next": "blackpig"
+        },
+        {
+          "label": "Umi",
+          "next": "umi"
         },
         {
           "label": "Back",
-          "next": "food-more"
+          "next": "food"
         }
       ]
     },
     "umi": {
-      "speak": "519 North 8th. Umi. Sushi and hibachi steak. They cook it at the table.",
+      "speak": "Umi. 519 North 8th. Sushi and hibachi. It pops. This is the door.",
       "line": "UMI",
+      "anchor": "downtown",
       "choices": [
         {
-          "label": "Get there",
-          "href": "https://www.google.com/maps/search/?api=1&query=Umi+Sushi+and+Steak+House+519+N+8th+St+Sheboygan+WI"
+          "label": "Black Pig",
+          "next": "blackpig"
         },
         {
-          "label": "Site",
-          "href": "http://umisushisteakhouse.com/"
+          "label": "Tochi",
+          "next": "tochi"
+        },
+        {
+          "label": "Water",
+          "next": "water"
         },
         {
           "label": "Back",
-          "next": "food-more"
+          "next": "food"
+        }
+      ]
+    },
+    "bars": {
+      "speak": "Bars are dinner here. Every bar has a food specialty. Burgers, brats, wings. This is the treasure.",
+      "line": "BAR FOOD",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Majerle's",
+          "next": "majerle"
+        },
+        {
+          "label": "Turk's",
+          "next": "turks"
+        },
+        {
+          "label": "Timber's",
+          "next": "turks"
+        },
+        {
+          "label": "Bourbon St",
+          "next": "bourbon"
+        },
+        {
+          "label": "Brat fry",
+          "next": "brat"
+        }
+      ]
+    },
+    "majerle": {
+      "speak": "Majerle's Black River Grill. The big wand. Evergreen Drive. South of town. This is the door.",
+      "line": "MAJERLE'S",
+      "anchor": "south",
+      "choices": [
+        {
+          "label": "South Side",
+          "next": "south"
+        },
+        {
+          "label": "Bars",
+          "next": "bars"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "turks": {
+      "speak": "Turk's and Timber's. 1022 Michigan. One door. Two names on the sign. Bar food. This is the door.",
+      "line": "TURK'S & TIMBER'S",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Bourbon St",
+          "next": "bourbon"
+        },
+        {
+          "label": "Bars",
+          "next": "bars"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "bourbon": {
+      "speak": "Bourbon Street. 1536 Indiana. A Sheboygan bar that feeds you. This is the door.",
+      "line": "BOURBON STREET",
+      "anchor": "south",
+      "choices": [
+        {
+          "label": "Turk's",
+          "next": "turks"
+        },
+        {
+          "label": "Bars",
+          "next": "bars"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "blast": {
+      "speak": "Blast Soft Serve. 406 Pennsylvania. By the beach, by the marina. Lines. The lot pops. Chester's Waterfront sits with it. Burgers, brats. One place.",
+      "line": "BLAST + CHESTER'S",
+      "anchor": "blast",
+      "choices": [
+        {
+          "label": "Water",
+          "next": "water"
+        },
+        {
+          "label": "Slo Food",
+          "next": "slofood"
+        },
+        {
+          "label": "Keep walking",
+          "next": "move"
+        },
+        {
+          "label": "Back",
+          "next": "food"
         }
       ]
     },
     "brat": {
       "speak": "Friday night. Smoke in the air. You already know the corner.",
       "line": "BRAT FRY",
+      "anchor": "food",
       "choices": [
         {
           "label": "Keep walking",
@@ -514,13 +523,14 @@
         },
         {
           "label": "Back",
-          "next": "food-more"
+          "next": "food"
         }
       ]
     },
     "perch": {
       "speak": "Harbor. Fried perch. You can hear the boats from the plate.",
       "line": "ON THE WATER",
+      "anchor": "water",
       "choices": [
         {
           "label": "Walk it off",
@@ -532,7 +542,7 @@
         },
         {
           "label": "Back",
-          "next": "food-more"
+          "next": "food"
         }
       ]
     },
@@ -550,13 +560,14 @@
         },
         {
           "label": "Back",
-          "next": "land"
+          "next": "map"
         }
       ]
     },
     "light": {
       "speak": "Red lighthouse. Stone pier. The lake is the whole show.",
       "line": "THE LIGHT",
+      "anchor": "water",
       "choices": [
         {
           "label": "Food after",
@@ -575,6 +586,7 @@
     "walk": {
       "speak": "No destination. Just the miles. Drop a pin when you have one.",
       "line": "THE WALK",
+      "anchor": "move",
       "choices": [
         {
           "label": "Food",
@@ -593,6 +605,7 @@
     "nowhere": {
       "speak": "Nowhere is a place here. Water. Sky. You.",
       "line": "NOWHERE",
+      "anchor": "nothing",
       "choices": [
         {
           "label": "Listen again",
@@ -622,7 +635,7 @@
         },
         {
           "label": "Back",
-          "next": "land"
+          "next": "map"
         }
       ]
     },
@@ -645,6 +658,82 @@
         {
           "label": "Water",
           "next": "water"
+        }
+      ]
+    },
+    "downtown": {
+      "speak": "Eighth Street. The spine. Food, going out, Slo Food Market, the whole town walking.",
+      "line": "8TH STREET",
+      "choices": [
+        {
+          "label": "Food",
+          "next": "food"
+        },
+        {
+          "label": "Stefano",
+          "next": "stefano"
+        },
+        {
+          "label": "North Side",
+          "next": "north"
+        },
+        {
+          "label": "South Side",
+          "next": "south"
+        }
+      ]
+    },
+    "north": {
+      "speak": "North side. Lake wind. People who stay. School up the hill.",
+      "line": "NORTH SIDE",
+      "choices": [
+        {
+          "label": "School",
+          "next": "school"
+        },
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "The lake",
+          "next": "water"
+        }
+      ]
+    },
+    "south": {
+      "speak": "South side. The long blocks. You can walk forever.",
+      "line": "SOUTH SIDE",
+      "choices": [
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "Majerle's",
+          "next": "majerle"
+        },
+        {
+          "label": "Sit",
+          "next": "nothing"
+        }
+      ]
+    },
+    "school": {
+      "speak": "UW Green Bay Sheboygan. People are the school. The future is already enrolled.",
+      "line": "THE SCHOOL",
+      "choices": [
+        {
+          "label": "North Side",
+          "next": "north"
+        },
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "Walk",
+          "next": "move"
         }
       ]
     }
