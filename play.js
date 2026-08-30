@@ -28,7 +28,7 @@ function stopListen() {
 function routeTalk(text) {
   const t = String(text || "").toLowerCase();
   const hits = [
-    [/food|eat|hungry|brat|perch|bite/, "food"],
+    [/food|eat|hungry|brat|perch|bite|pizza|grocery|stefano|indian|spice/, "food"],
     [/move|walk|foot|run/, "move"],
     [/water|lake|swim|surf|splash|harbor/, "water"],
     [/nothing|nowhere|hid|alone|quiet|hush/, "nothing"],
@@ -135,7 +135,10 @@ function renderChoices(node) {
     const b = document.createElement("button");
     b.type = "button";
     b.textContent = c.label;
-    b.addEventListener("click", () => go(c.next));
+    b.addEventListener("click", () => {
+      if (c.href) window.open(c.href, "_blank", "noopener,noreferrer");
+      if (c.next) go(c.next);
+    });
     choicesEl.appendChild(b);
 
     let advanced = false;
