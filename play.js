@@ -21,6 +21,21 @@ let pinsPopped = false;
 let walking = false;
 
 const TALK_HITS = [
+  [/johnston/, "johnstons"],
+  [/oostburg bakery/, "oostburgbakery"],
+  [/city bakery/, "citybakery"],
+  [/rosa/, "rosas"],
+  [/vene|venegas|benny|pancake/, "venes"],
+  [/kwik trip|kwikery|quik trip|quick trip|county road j/, "kwiktrip"],
+  [/mcdonald|macdonald|micky d|\bcone\b/, "mcdonalds"],
+  [/bakery|hard roll/, "bakery"],
+  [/oostburg/, "oostburg"],
+  [/plymouth/, "plymouth"],
+  [/elkhart/, "elkhart"],
+  [/cedar grove/, "cedargrove"],
+  [/sheboygan falls|\bfalls\b/, "falls"],
+  [/kohler/, "kohler"],
+  [/the county|other towns|walk the county/, "county"],
   [/il ritrovo|ritrovo|neapolitan/, "ilritrovo"],
   [/stefano stretch|the stretch/, "stefano"],
   [/stefano|trattoria/, "stefanos"],
@@ -156,6 +171,7 @@ function renderChoices(node) {
   const gen = ++popGen;
   const list = (node && node.choices) || [];
   choicesEl.innerHTML = "";
+  choicesEl.classList.toggle("many", list.length > 8);
   if (!list.length) {
     choicesEl.hidden = true;
     return;
@@ -244,6 +260,7 @@ function setMode(mode) {
 function paintBoard() {
   placesEl.innerHTML = "";
   for (const p of tree.board || []) {
+    if (p.paint === false) continue;
     const b = document.createElement("button");
     b.type = "button";
     b.className = "place";
@@ -405,6 +422,11 @@ async function boot() {
   mapBtn.addEventListener("click", () => go("map"));
   const light = document.getElementById("lighthouse");
   if (light) light.addEventListener("click", () => go("light"));
+  const ktCounty = document.getElementById("kt-county");
+  if (ktCounty) ktCounty.addEventListener("click", () => go("countykt"));
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
 }
 
 boot();

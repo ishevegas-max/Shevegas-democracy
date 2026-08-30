@@ -3,24 +3,62 @@
   "hub": "map",
   "board": [
     {
+      "id": "elkhart",
+      "label": "ELKHART",
+      "x": 12,
+      "y": 12,
+      "tone": "cyan",
+      "tag": "LAKE"
+    },
+    {
+      "id": "countykt",
+      "label": "COUNTY\nKWIK TRIP",
+      "x": 22,
+      "y": 26,
+      "tone": "cream",
+      "paint": false
+    },
+    {
+      "id": "plymouth",
+      "label": "PLYMOUTH",
+      "x": 14,
+      "y": 38,
+      "tone": "tangerine",
+      "tag": "WEST"
+    },
+    {
+      "id": "falls",
+      "label": "FALLS",
+      "x": 30,
+      "y": 46,
+      "tone": "pink"
+    },
+    {
+      "id": "kohler",
+      "label": "KOHLER",
+      "x": 42,
+      "y": 36,
+      "tone": "gold"
+    },
+    {
       "id": "north",
       "label": "NORTH\nSIDE",
-      "x": 26,
-      "y": 12,
+      "x": 62,
+      "y": 14,
       "tone": "coral"
     },
     {
       "id": "school",
       "label": "SCHOOL",
-      "x": 13,
-      "y": 27,
+      "x": 50,
+      "y": 24,
       "tone": "gold",
       "tag": "UWGB"
     },
     {
       "id": "downtown",
       "label": "DOWNTOWN",
-      "x": 30,
+      "x": 60,
       "y": 46,
       "tone": "tangerine",
       "tag": "8TH ST"
@@ -28,56 +66,80 @@
     {
       "id": "food",
       "label": "FOOD",
-      "x": 50,
-      "y": 40,
+      "x": 72,
+      "y": 36,
       "tone": "pink",
       "pin": true
     },
     {
       "id": "water",
       "label": "WATER",
-      "x": 83,
-      "y": 18,
+      "x": 88,
+      "y": 14,
       "tone": "cyan",
       "pin": true
     },
     {
       "id": "blast",
       "label": "BLAST",
-      "x": 82,
-      "y": 36,
+      "x": 86,
+      "y": 32,
       "tone": "cream",
       "tag": "MARINA"
     },
     {
       "id": "move",
       "label": "MOVE",
-      "x": 78,
-      "y": 58,
+      "x": 84,
+      "y": 54,
       "tone": "lime",
       "pin": true
     },
     {
       "id": "nothing",
       "label": "NOTHING",
-      "x": 12,
-      "y": 62,
+      "x": 46,
+      "y": 58,
       "tone": "quiet",
       "pin": true
     },
     {
       "id": "south",
       "label": "SOUTH\nSIDE",
-      "x": 28,
-      "y": 80,
+      "x": 62,
+      "y": 66,
       "tone": "sunset"
+    },
+    {
+      "id": "kwiktrip",
+      "label": "KWIK TRIP",
+      "x": 50,
+      "y": 72,
+      "tone": "gold",
+      "tag": "KWIKERY"
+    },
+    {
+      "id": "oostburg",
+      "label": "OOSTBURG",
+      "x": 54,
+      "y": 84,
+      "tone": "sunset",
+      "tag": "SOUTH"
+    },
+    {
+      "id": "cedargrove",
+      "label": "CEDAR\nGROVE",
+      "x": 40,
+      "y": 92,
+      "tone": "lime",
+      "tag": "SOUTH"
     }
   ],
   "nodes": {
     "land": {
       "speak": "Be your own superhero. The future needs you.",
+      "line": "THIS IS SHEBOYGAN COUNTY",
       "audio": "clips/door-bite.m4a",
-      "line": "THIS IS SHEBOYGAN",
       "choices": [
         {
           "label": "Food",
@@ -103,14 +165,30 @@
     },
     "map": {
       "hub": true,
-      "speak": "This is Sheboygan. Walk it.",
-      "line": "WALK THE CITY"
+      "speak": "This is Sheboygan County. Walk it.",
+      "line": "WALK THE COUNTY"
     },
     "food": {
-      "speak": "Hungry. Brat fry, lake perch, or something only you know.",
+      "speak": "Hungry. Kwik Trip. A cone. Bakery. Vene's pancakes. Then the stretch. The county eats.",
       "line": "FIND FOOD",
       "anchor": "food",
       "choices": [
+        {
+          "label": "Kwik Trip",
+          "next": "kwiktrip"
+        },
+        {
+          "label": "McDonald's",
+          "next": "mcdonalds"
+        },
+        {
+          "label": "Bakery",
+          "next": "bakery"
+        },
+        {
+          "label": "Vene's",
+          "next": "venes"
+        },
         {
           "label": "Pizza",
           "next": "pizza"
@@ -134,6 +212,422 @@
         {
           "label": "Blast",
           "next": "blast"
+        },
+        {
+          "label": "County",
+          "next": "county"
+        }
+      ]
+    },
+    "kwiktrip": {
+      "speak": "Kwik Trip. Wisconsin. Kwikery inside. 625 South Taylor. 4220 County Road J. More around the county. This is the door.",
+      "line": "KWIK TRIP",
+      "anchor": "kwiktrip",
+      "choices": [
+        {
+          "label": "Taylor Dr",
+          "next": "kwiktaylor"
+        },
+        {
+          "label": "County J",
+          "next": "kwikj"
+        },
+        {
+          "label": "County",
+          "next": "countykt"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "kwiktaylor": {
+      "speak": "625 South Taylor. Kwik Trip. Kwikery in-store. This is the door.",
+      "line": "TAYLOR DR",
+      "anchor": "kwiktrip",
+      "choices": [
+        {
+          "label": "County J",
+          "next": "kwikj"
+        },
+        {
+          "label": "County",
+          "next": "countykt"
+        },
+        {
+          "label": "Bakery",
+          "next": "bakery"
+        },
+        {
+          "label": "Back",
+          "next": "kwiktrip"
+        }
+      ]
+    },
+    "kwikj": {
+      "speak": "4220 County Road J. Kwik Trip. This is the door.",
+      "line": "COUNTY ROAD J",
+      "anchor": "kwiktrip",
+      "choices": [
+        {
+          "label": "Taylor Dr",
+          "next": "kwiktaylor"
+        },
+        {
+          "label": "County",
+          "next": "countykt"
+        },
+        {
+          "label": "Back",
+          "next": "kwiktrip"
+        }
+      ]
+    },
+    "countykt": {
+      "speak": "Kwik Trip around the county. Falls. Plymouth. The other towns. Walk to the one by you. This is the door.",
+      "line": "COUNTY KWIK TRIP",
+      "anchor": "countykt",
+      "choices": [
+        {
+          "label": "Falls",
+          "next": "falls"
+        },
+        {
+          "label": "Plymouth",
+          "next": "plymouth"
+        },
+        {
+          "label": "Taylor Dr",
+          "next": "kwiktaylor"
+        },
+        {
+          "label": "Back",
+          "next": "kwiktrip"
+        }
+      ]
+    },
+    "mcdonalds": {
+      "speak": "McDonald's. Get an ice cream cone. The county has them. Walk to Falls. Walk to Plymouth. Walk the city. This is the door.",
+      "line": "GET A CONE",
+      "anchor": "food",
+      "choices": [
+        {
+          "label": "Falls",
+          "next": "falls"
+        },
+        {
+          "label": "Plymouth",
+          "next": "plymouth"
+        },
+        {
+          "label": "City",
+          "next": "north"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "bakery": {
+      "speak": "Hard rolls. The county bakes. Johnston's. City Bakery. Oostburg. Rosa's.",
+      "line": "BAKERY",
+      "anchor": "food",
+      "choices": [
+        {
+          "label": "Johnston's",
+          "next": "johnstons"
+        },
+        {
+          "label": "City Bakery",
+          "next": "citybakery"
+        },
+        {
+          "label": "Oostburg",
+          "next": "oostburgbakery"
+        },
+        {
+          "label": "Rosa's",
+          "next": "rosas"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "johnstons": {
+      "speak": "Johnston's Bakery. 1227 Superior. Since 1950. Home of the Sheboygan hard roll. This is the door.",
+      "line": "JOHNSTON'S",
+      "anchor": "north",
+      "choices": [
+        {
+          "label": "City Bakery",
+          "next": "citybakery"
+        },
+        {
+          "label": "Rosa's",
+          "next": "rosas"
+        },
+        {
+          "label": "North Side",
+          "next": "north"
+        },
+        {
+          "label": "Back",
+          "next": "bakery"
+        }
+      ]
+    },
+    "citybakery": {
+      "speak": "City Bakery. 1102 Michigan. Since 1939. Hearth-baked hard rolls. This is the door.",
+      "line": "CITY BAKERY",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "Johnston's",
+          "next": "johnstons"
+        },
+        {
+          "label": "Vene's",
+          "next": "venes"
+        },
+        {
+          "label": "Oostburg",
+          "next": "oostburgbakery"
+        },
+        {
+          "label": "Back",
+          "next": "bakery"
+        }
+      ]
+    },
+    "oostburgbakery": {
+      "speak": "Oostburg Bakery. 16 North 10th. Family owned since 1929. Hard rolls. Creme-filled coffee cakes. This is the door.",
+      "line": "OOSTBURG BAKERY",
+      "anchor": "oostburg",
+      "choices": [
+        {
+          "label": "Oostburg",
+          "next": "oostburg"
+        },
+        {
+          "label": "Johnston's",
+          "next": "johnstons"
+        },
+        {
+          "label": "City Bakery",
+          "next": "citybakery"
+        },
+        {
+          "label": "Back",
+          "next": "bakery"
+        }
+      ]
+    },
+    "rosas": {
+      "speak": "Rosa's Bakery. 2525 North 15th. Mexican bakery. The sweet trio. This is the door.",
+      "line": "ROSA'S",
+      "anchor": "north",
+      "choices": [
+        {
+          "label": "Johnston's",
+          "next": "johnstons"
+        },
+        {
+          "label": "City Bakery",
+          "next": "citybakery"
+        },
+        {
+          "label": "North Side",
+          "next": "north"
+        },
+        {
+          "label": "Back",
+          "next": "bakery"
+        }
+      ]
+    },
+    "venes": {
+      "speak": "Vene's Pancake House. 1632 Michigan. Alfredo Venegas. Pancakes and Mexican breakfast. Little place. This is the door.",
+      "line": "VENE'S",
+      "anchor": "downtown",
+      "choices": [
+        {
+          "label": "City Bakery",
+          "next": "citybakery"
+        },
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "Bakery",
+          "next": "bakery"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "county": {
+      "speak": "People eat the county. People are the county. Walk Plymouth. Falls. Kohler. Elkhart. Oostburg. Cedar Grove.",
+      "line": "THE COUNTY",
+      "anchor": "countykt",
+      "choices": [
+        {
+          "label": "Plymouth",
+          "next": "plymouth"
+        },
+        {
+          "label": "Falls",
+          "next": "falls"
+        },
+        {
+          "label": "Kohler",
+          "next": "kohler"
+        },
+        {
+          "label": "Elkhart",
+          "next": "elkhart"
+        },
+        {
+          "label": "Oostburg",
+          "next": "oostburg"
+        },
+        {
+          "label": "Cedar Grove",
+          "next": "cedargrove"
+        }
+      ]
+    },
+    "plymouth": {
+      "speak": "Plymouth. West. A cone on Eastern. Kwik Trip around. People eat here.",
+      "line": "PLYMOUTH",
+      "choices": [
+        {
+          "label": "Cone",
+          "next": "mcdonalds"
+        },
+        {
+          "label": "Kwik Trip",
+          "next": "countykt"
+        },
+        {
+          "label": "County",
+          "next": "county"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "falls": {
+      "speak": "Sheboygan Falls. A cone on 32. Kwik Trip around. People eat here.",
+      "line": "SHEBOYGAN FALLS",
+      "choices": [
+        {
+          "label": "Cone",
+          "next": "mcdonalds"
+        },
+        {
+          "label": "Kwik Trip",
+          "next": "countykt"
+        },
+        {
+          "label": "Kohler",
+          "next": "kohler"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "kohler": {
+      "speak": "Kohler. Next to the city. Walk it. Eat the county. People are here.",
+      "line": "KOHLER",
+      "choices": [
+        {
+          "label": "Falls",
+          "next": "falls"
+        },
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "Cone",
+          "next": "mcdonalds"
+        },
+        {
+          "label": "Back",
+          "next": "county"
+        }
+      ]
+    },
+    "elkhart": {
+      "speak": "Elkhart Lake. Northwest. People eat the county. Walk it.",
+      "line": "ELKHART LAKE",
+      "choices": [
+        {
+          "label": "Plymouth",
+          "next": "plymouth"
+        },
+        {
+          "label": "County",
+          "next": "county"
+        },
+        {
+          "label": "Kwik Trip",
+          "next": "countykt"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "oostburg": {
+      "speak": "Oostburg. South. The bakery is the door. Since 1929.",
+      "line": "OOSTBURG",
+      "choices": [
+        {
+          "label": "Bakery",
+          "next": "oostburgbakery"
+        },
+        {
+          "label": "Cedar Grove",
+          "next": "cedargrove"
+        },
+        {
+          "label": "South Side",
+          "next": "south"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "cedargrove": {
+      "speak": "Cedar Grove. South of Oostburg. People eat the county. Walk it.",
+      "line": "CEDAR GROVE",
+      "choices": [
+        {
+          "label": "Oostburg",
+          "next": "oostburg"
+        },
+        {
+          "label": "County",
+          "next": "county"
+        },
+        {
+          "label": "Back",
+          "next": "food"
         }
       ]
     },
@@ -670,16 +1164,16 @@
           "next": "food"
         },
         {
+          "label": "Vene's",
+          "next": "venes"
+        },
+        {
           "label": "Stefano",
           "next": "stefano"
         },
         {
-          "label": "North Side",
-          "next": "north"
-        },
-        {
-          "label": "South Side",
-          "next": "south"
+          "label": "County",
+          "next": "county"
         }
       ]
     },
@@ -687,6 +1181,10 @@
       "speak": "North side. Lake wind. People who stay. School up the hill.",
       "line": "NORTH SIDE",
       "choices": [
+        {
+          "label": "Johnston's",
+          "next": "johnstons"
+        },
         {
           "label": "School",
           "next": "school"
@@ -714,8 +1212,12 @@
           "next": "majerle"
         },
         {
-          "label": "Sit",
-          "next": "nothing"
+          "label": "Oostburg",
+          "next": "oostburg"
+        },
+        {
+          "label": "Kwik Trip",
+          "next": "kwiktrip"
         }
       ]
     },
