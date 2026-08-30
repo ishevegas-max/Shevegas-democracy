@@ -29,8 +29,228 @@
       ]
     },
     "food": {
-      "speak": "Hungry. Brat fry, lake perch, or something only you know.",
+      "speak": "Pizza first. Then the Stefano stretch. Local Guide. Get there and you will eat well.",
       "line": "FIND FOOD",
+      "choices": [
+        {
+          "label": "Pizza",
+          "next": "pizza"
+        },
+        {
+          "label": "Groceries",
+          "next": "groceries"
+        },
+        {
+          "label": "Indian",
+          "next": "indian"
+        },
+        {
+          "label": "More",
+          "next": "food-more"
+        },
+        {
+          "label": "Back",
+          "next": "land"
+        }
+      ]
+    },
+    "pizza": {
+      "speak": "This is a pizza town now. Start at the triangle.",
+      "line": "PIZZA",
+      "choices": [
+        {
+          "label": "The triangle",
+          "next": "triangle"
+        },
+        {
+          "label": "Faye's",
+          "next": "fayes"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "triangle": {
+      "speak": "Il Ritrovo on 8th. Trattoria across the street. Two grocers around the corner.",
+      "line": "THE TRIANGLE",
+      "choices": [
+        {
+          "label": "Il Ritrovo",
+          "next": "il-ritrovo"
+        },
+        {
+          "label": "Trattoria Stefano",
+          "next": "trattoria"
+        },
+        {
+          "label": "Groceries",
+          "next": "groceries"
+        },
+        {
+          "label": "Back",
+          "next": "pizza"
+        }
+      ]
+    },
+    "il-ritrovo": {
+      "speak": "515 South 8th. Wood fire since 2000. Get there.",
+      "line": "IL RITROVO",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=Il+Ritrovo+515+S+8th+St+Sheboygan+WI"
+        },
+        {
+          "label": "Site",
+          "href": "https://www.ilritrovopizza.com/"
+        },
+        {
+          "label": "Back",
+          "next": "triangle"
+        }
+      ]
+    },
+    "trattoria": {
+      "speak": "522 South 8th. Across from the pizza.",
+      "line": "TRATTORIA STEFANO",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=Trattoria+Stefano+522+S+8th+St+Sheboygan+WI"
+        },
+        {
+          "label": "Site",
+          "href": "https://www.trattoriastefano.com/"
+        },
+        {
+          "label": "Back",
+          "next": "triangle"
+        }
+      ]
+    },
+    "fayes": {
+      "speak": "1821 Calumet Drive. Since 1957.",
+      "line": "FAYE'S",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=Faye's+Pizza+1821+Calumet+Dr+Sheboygan+WI"
+        },
+        {
+          "label": "Site",
+          "href": "https://www.fayespizza.com/"
+        },
+        {
+          "label": "Back",
+          "next": "pizza"
+        }
+      ]
+    },
+    "groceries": {
+      "speak": "Two grocery stores. Same stretch. Get there and you will eat well.",
+      "line": "GROCERIES",
+      "choices": [
+        {
+          "label": "Slo Food Market",
+          "next": "slo"
+        },
+        {
+          "label": "Field to Fork",
+          "next": "field"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "slo": {
+      "speak": "731 Pennsylvania. Stefano’s Slo Food Market. Next to Field to Fork.",
+      "line": "SLO FOOD MARKET",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=Stefano's+Slo+Food+Market+731+Pennsylvania+Ave+Sheboygan+WI"
+        },
+        {
+          "label": "Site",
+          "href": "https://www.slofoodmarket.com/"
+        },
+        {
+          "label": "Back",
+          "next": "groceries"
+        }
+      ]
+    },
+    "field": {
+      "speak": "511 South 8th. Café and grocery. Since 2005.",
+      "line": "FIELD TO FORK",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=Field+to+Fork+511+S+8th+St+Sheboygan+WI"
+        },
+        {
+          "label": "Site",
+          "href": "https://www.fieldtoforkcafe.com/"
+        },
+        {
+          "label": "Back",
+          "next": "groceries"
+        }
+      ]
+    },
+    "indian": {
+      "speak": "The Spices. Downtown and south.",
+      "line": "INDIAN",
+      "choices": [
+        {
+          "label": "Downtown",
+          "next": "spices-downtown"
+        },
+        {
+          "label": "South",
+          "next": "spices-south"
+        },
+        {
+          "label": "Back",
+          "next": "food"
+        }
+      ]
+    },
+    "spices-downtown": {
+      "speak": "1132 North 8th. The Spices.",
+      "line": "THE SPICES DOWNTOWN",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=The+Spices+Restaurant+1132+N+8th+St+Sheboygan+WI"
+        },
+        {
+          "label": "Back",
+          "next": "indian"
+        }
+      ]
+    },
+    "spices-south": {
+      "speak": "4604 South Business Drive. The Spices.",
+      "line": "THE SPICES SOUTH",
+      "choices": [
+        {
+          "label": "Get there",
+          "href": "https://www.google.com/maps/search/?api=1&query=The+Spices+Restaurant+4604+S+Business+Dr+Sheboygan+WI"
+        },
+        {
+          "label": "Back",
+          "next": "indian"
+        }
+      ]
+    },
+    "food-more": {
+      "speak": "Brat fry. Lake perch. The rest of the table.",
+      "line": "MORE",
       "choices": [
         {
           "label": "Brat fry",
@@ -42,7 +262,7 @@
         },
         {
           "label": "Back",
-          "next": "land"
+          "next": "food"
         }
       ]
     },
@@ -60,7 +280,7 @@
         },
         {
           "label": "Back",
-          "next": "food"
+          "next": "food-more"
         }
       ]
     },
@@ -78,7 +298,7 @@
         },
         {
           "label": "Back",
-          "next": "food"
+          "next": "food-more"
         }
       ]
     },
