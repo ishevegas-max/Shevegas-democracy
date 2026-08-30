@@ -28,7 +28,7 @@ function stopListen() {
 function routeTalk(text) {
   const t = String(text || "").toLowerCase();
   const hits = [
-    [/food|eat|hungry|brat|perch|bite|pizza|grocery|stefano|indian|spice/, "food"],
+    [/food|eat|hungry|brat|perch|bite|pizza|grocery|stefano|indian|spice|bar|majerle|turk|pig|ramen|sushi|hibachi/, "food"],
     [/move|walk|foot|run/, "move"],
     [/water|lake|swim|surf|splash|harbor/, "water"],
     [/nothing|nowhere|hid|alone|quiet|hush/, "nothing"],
