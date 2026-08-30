@@ -2,7 +2,7 @@
   "name": "SheVegas",
   "short_name": "SheVegas",
   "description": "This is Sheboygan County. The game is coming.",
-  "start_url": "./coming.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#ff6b3d",
   "theme_color": "#ff6b3d",
