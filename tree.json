@@ -133,6 +133,24 @@
       "y": 92,
       "tone": "lime",
       "tag": "SOUTH"
+    },
+    {
+      "id": "marina",
+      "label": "MARINA",
+      "x": 90,
+      "y": 28,
+      "tone": "cyan",
+      "pin": true,
+      "tag": "821 BROUGHTON"
+    },
+    {
+      "id": "cityhall",
+      "label": "CITY\nHALL",
+      "x": 54,
+      "y": 40,
+      "tone": "ink",
+      "pin": true,
+      "tag": "828 CENTER"
     }
   ],
   "nodes": {
@@ -985,6 +1003,10 @@
       "anchor": "blast",
       "choices": [
         {
+          "label": "Marina",
+          "next": "marina"
+        },
+        {
           "label": "Water",
           "next": "water"
         },
@@ -1120,6 +1142,10 @@
       "line": "WATER",
       "choices": [
         {
+          "label": "Marina",
+          "next": "marina"
+        },
+        {
           "label": "On the water",
           "next": "perch"
         },
@@ -1159,6 +1185,10 @@
       "speak": "Eighth Street. The spine. Food, going out, Slo Food Market, the whole town walking.",
       "line": "8TH STREET",
       "choices": [
+        {
+          "label": "City Hall",
+          "next": "cityhall"
+        },
         {
           "label": "Food",
           "next": "food"
@@ -1236,6 +1266,52 @@
         {
           "label": "Walk",
           "next": "move"
+        }
+      ]
+    },
+    "marina": {
+      "speak": "Harbor Centre Marina. 821 Broughton Drive. The harbor door. Edgewater. Res. 109.",
+      "line": "HARBOR CENTRE MARINA",
+      "anchor": "marina",
+      "choices": [
+        {
+          "label": "Water",
+          "next": "water"
+        },
+        {
+          "label": "Blast",
+          "next": "blast"
+        },
+        {
+          "label": "City Hall",
+          "next": "cityhall"
+        },
+        {
+          "label": "Back",
+          "next": "map"
+        }
+      ]
+    },
+    "cityhall": {
+      "speak": "City Hall. 828 Center Avenue. Packets. Votes. The room.",
+      "line": "CITY HALL",
+      "anchor": "cityhall",
+      "choices": [
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "Marina",
+          "next": "marina"
+        },
+        {
+          "label": "School",
+          "next": "school"
+        },
+        {
+          "label": "Back",
+          "next": "map"
         }
       ]
     }
