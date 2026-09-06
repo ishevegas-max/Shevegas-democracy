@@ -53,7 +53,8 @@
       "x": 50,
       "y": 24,
       "tone": "gold",
-      "tag": "UWGB"
+      "tag": "1 UNIVERSITY",
+      "pin": true
     },
     {
       "id": "downtown",
@@ -151,6 +152,15 @@
       "tone": "ink",
       "pin": true,
       "tag": "828 CENTER"
+    },
+    {
+      "id": "wscs",
+      "label": "WSCS",
+      "x": 48,
+      "y": 20,
+      "tone": "gold",
+      "pin": true,
+      "tag": "CAMPUS TV"
     }
   ],
   "nodes": {
@@ -1252,12 +1262,21 @@
       ]
     },
     "school": {
-      "speak": "UW Green Bay Sheboygan. People are the school. The future is already enrolled.",
+      "speak": "UW\u2013Green Bay Sheboygan. 1 University Drive. Main Building. People are the school.",
       "line": "THE SCHOOL",
+      "anchor": "school",
       "choices": [
+        {
+          "label": "WSCS",
+          "next": "wscs"
+        },
         {
           "label": "North Side",
           "next": "north"
+        },
+        {
+          "label": "City Hall",
+          "next": "cityhall"
         },
         {
           "label": "Downtown",
@@ -1293,7 +1312,7 @@
       ]
     },
     "cityhall": {
-      "speak": "City Hall. 828 Center Avenue. Packets. Votes. The room.",
+      "speak": "City Hall. 828 Center Avenue. Council Chambers. Suite 103 is Admin. ZenCity order form. Packets land here. Sep 8 Flock vote when the agenda posts.",
       "line": "CITY HALL",
       "anchor": "cityhall",
       "choices": [
@@ -1308,6 +1327,33 @@
         {
           "label": "School",
           "next": "school"
+        },
+        {
+          "label": "WSCS",
+          "next": "wscs"
+        },
+        {
+          "label": "Back",
+          "next": "map"
+        }
+      ]
+    },
+    "wscs": {
+      "speak": "WSCS Community TV. UW\u2013Green Bay Sheboygan campus. Main Building. 1 University Drive. The studio.",
+      "line": "WSCS",
+      "anchor": "wscs",
+      "choices": [
+        {
+          "label": "School",
+          "next": "school"
+        },
+        {
+          "label": "City Hall",
+          "next": "cityhall"
+        },
+        {
+          "label": "North Side",
+          "next": "north"
         },
         {
           "label": "Back",
