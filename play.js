@@ -59,6 +59,7 @@ const TALK_HITS = [
   [/lighthouse|the light/, "light"],
   [/wscs|community tv|community television/, "wscs"],
   [/school|campus|university|college|uw|green bay|university drive/, "school"],
+  [/925|pelican|rupp|downtown 925/, "n8th925"],
   [/downtown|eighth|8th|going out/, "downtown"],
   [/north/, "north"],
   [/south/, "south"],

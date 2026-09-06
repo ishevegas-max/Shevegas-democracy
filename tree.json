@@ -161,6 +161,15 @@
       "tone": "gold",
       "pin": true,
       "tag": "CAMPUS TV"
+    },
+    {
+      "id": "n8th925",
+      "label": "925",
+      "x": 64,
+      "y": 42,
+      "tone": "tangerine",
+      "pin": true,
+      "tag": "N 8TH"
     }
   ],
   "nodes": {
@@ -929,6 +938,10 @@
       "anchor": "downtown",
       "choices": [
         {
+          "label": "925 N 8th",
+          "next": "n8th925"
+        },
+        {
           "label": "Majerle's",
           "next": "majerle"
         },
@@ -1200,6 +1213,10 @@
           "next": "cityhall"
         },
         {
+          "label": "925 N 8th",
+          "next": "n8th925"
+        },
+        {
           "label": "Food",
           "next": "food"
         },
@@ -1354,6 +1371,33 @@
         {
           "label": "North Side",
           "next": "north"
+        },
+        {
+          "label": "Back",
+          "next": "map"
+        }
+      ]
+    },
+    "n8th925": {
+      "speak": "925 North 8th. Ex-Rupp's. The RDA site on the spine. Door is the address.",
+      "line": "925 N 8TH",
+      "anchor": "n8th925",
+      "choices": [
+        {
+          "label": "Downtown",
+          "next": "downtown"
+        },
+        {
+          "label": "Bars",
+          "next": "bars"
+        },
+        {
+          "label": "Core",
+          "next": "core"
+        },
+        {
+          "label": "City Hall",
+          "next": "cityhall"
         },
         {
           "label": "Back",
