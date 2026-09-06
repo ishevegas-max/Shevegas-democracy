@@ -50,6 +50,7 @@ const TALK_HITS = [
   [/bourbon/, "bourbon"],
   [/blast|chester|soft serve|ice cream/, "blast"],
   [/harbor centre|harbour centre|\bmarina\b|broughton/, "marina"],
+  [/sheboygan pd|\bspd\b|police|23rd/, "spd"],
   [/city hall|\b828\b|center avenue|centre avenue/, "cityhall"],
   [/bar pizza/, "barpizza"],
   [/pizza|triangle/, "pizza"],

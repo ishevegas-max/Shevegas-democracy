@@ -170,6 +170,15 @@
       "tone": "tangerine",
       "pin": true,
       "tag": "N 8TH"
+    },
+    {
+      "id": "spd",
+      "label": "SPD",
+      "x": 38,
+      "y": 34,
+      "tone": "ink",
+      "pin": true,
+      "tag": "1315 N 23RD"
     }
   ],
   "nodes": {
@@ -1239,6 +1248,10 @@
       "line": "NORTH SIDE",
       "choices": [
         {
+          "label": "SPD",
+          "next": "spd"
+        },
+        {
           "label": "Johnston's",
           "next": "johnstons"
         },
@@ -1329,13 +1342,17 @@
       ]
     },
     "cityhall": {
-      "speak": "City Hall. 828 Center Avenue. Council Chambers. Suite 103 is Admin. ZenCity order form. Packets land here. Sep 8 Flock vote when the agenda posts.",
+      "speak": "City Hall. 828 Center Avenue. Council Chambers. Suite 103 is Admin. Sep 8 Flock termination is on this floor when they vote. Packets land here.",
       "line": "CITY HALL",
       "anchor": "cityhall",
       "choices": [
         {
           "label": "Downtown",
           "next": "downtown"
+        },
+        {
+          "label": "SPD",
+          "next": "spd"
         },
         {
           "label": "Marina",
@@ -1398,6 +1415,29 @@
         {
           "label": "City Hall",
           "next": "cityhall"
+        },
+        {
+          "label": "Back",
+          "next": "map"
+        }
+      ]
+    },
+    "spd": {
+      "speak": "Sheboygan PD. 1315 North 23rd Street, Suite 101. Flock order form ships here. Falcon poles stay off the map until the city lists them.",
+      "line": "SHEBOYGAN PD",
+      "anchor": "spd",
+      "choices": [
+        {
+          "label": "City Hall",
+          "next": "cityhall"
+        },
+        {
+          "label": "School",
+          "next": "school"
+        },
+        {
+          "label": "Downtown",
+          "next": "downtown"
         },
         {
           "label": "Back",
